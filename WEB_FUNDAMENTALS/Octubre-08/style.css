@@ -1,0 +1,55 @@
+/* RESET DE LOS ESTILOS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    margin-left: 24px;
+}
+
+/* SELECTORES */
+
+/* Etiqueta */
+label {
+    color: red;
+}
+
+/* Clase */
+.form-input {
+    background-color: rgb(167, 221, 255);
+    margin: 8px;
+    padding: 16px;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+/* Id */
+
+#emailIpt {
+    background-color: goldenrod;
+    border-radius: 16px;
+    color: white;
+    padding: 0px 8px;
+}
+
+#genderLbl {
+    margin: 16px 4px 16px 8px;
+    font-size: 1.5em;
+}
+
+/* SELECTORES AVANZADOS */
+tr{
+    background-color: lightblue;
+}
+tbody tr{
+    background-color: red
+}
+.special-row{
+    background-color: yellow;
+}
+#champion-row{
+    background-color: green;
+}

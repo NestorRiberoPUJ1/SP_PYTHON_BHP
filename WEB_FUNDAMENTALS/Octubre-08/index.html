@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- alt+shift+a -->
+
+    <!-- Etiquetas de texto -->
+    <div>
+        <h1>Titulo 1</h1>
+    </div>
+    <h2>Titulo 2</h2>
+    <h3>Titulo 3</h3>
+    <h4>Titulo 4</h4>
+    <h5>Titulo 5</h5>
+    <h6>Titulo 6</h6>
+
+    <p>Parrafo largo que va a tener mucho contenido</p>
+
+    <!-- Etiquetas de link -->
+    <a href="http://www.google.com">IR A GOOGLE</a>
+
+    <!-- Etiquetas de imagen -->
+    <!-- <img src="./assets/nano.jpg" alt="interlagos" height="300"> -->
+    <!-- <img src="https://elsumario.com/wp-content/uploads/2020/07/407.jpg" alt="nano" height="300"> -->
+
+    <!-- Etiquetas de video -->
+    <!-- <video src="https://www.w3schools.com/html/mov_bbb.mp4" autoplay muted></video> -->
+
+    <!-- Etiquetas de audio -->
+    <!-- <audio src="https://www.w3schools.com/html/horse.mp3" controls></audio> -->
+
+
+    <!-- Etiquetas de lista -->
+
+    <!-- Lista desordenada -->
+    <ul>
+        <li>Elemento 1</li>
+        <li>Elemento 2</li>
+        <li>Elemento 3</li>
+    </ul>
+    <!-- Lista ordenada -->
+    <ol>
+        <li>Elemento 1</li>
+        <li>Elemento 2</li>
+        <li>Elemento 3</li>
+    </ol>
+
+
+    <!-- Etiquetas de tabla -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Carlos</td>
+                <td>Sainz</td>
+                <td>26</td>
+            </tr>
+            <tr class="special-row">
+                <td>Lando</td>
+                <td>Norris</td>
+                <td>21</td>
+            </tr>
+            <tr class="special-row" id="champion-row">
+                <td>Max</td>
+                <td>Verstappen</td>
+                <td>23</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total: 3</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+    <!-- Etiquetas de formulario -->
+
+    <form action="#" method="get">
+        <div class="form-input">
+            <label for="emailIpt">Email</label>
+            <input type="email" name="correoElectronico" id="emailIpt">
+        </div>
+        <div class="form-input">
+            <label for="passwordIpt">Contraseña</label>
+            <input type="password" name="contrasena" id="passwordIpt">
+        </div>
+        <div class="form-input">
+            <label for="dateIpt">Fecha de nacimiento</label>
+            <input type="date" name="fechaNacimiento" id="dateIpt">
+        </div>
+        <div class="form-input">
+            <label for="colorIpt">Color favorito</label>
+            <input type="color" name="colorFavorito" id="colorIpt">
+        </div>
+        <div class="form-input">
+            <label for="rangeIpt">Rango</label>
+            <input type="range" name="rango" id="rangeIpt">
+        </div>
+        <div class="form-input">
+            <select name="equipoFavorito" id="teamIpt">
+                <option value="Scuderia Ferrari">Ferrari</option>
+                <option value="Mercedes AMG Petronas">Mercedes</option>
+                <option value="Oracle Red Bull Racing">Red Bull</option>
+            </select>
+        </div>
+
+        <h2 id="genderLbl">Género</h2>
+        <div class="form-input">
+            <label for="genderIptM">Masculino</label>
+            <input type="radio" name="genero" id="genderIptM" value="masculino">
+            <label for="genderIptF">Femenino</label>
+            <input type="radio" name="genero" id="genderIptF" value="femenino">
+        </div>
+        <div class="form-input">
+            <textarea>
+                </textarea>
+        </div>
+        <div class="form-input">
+            <label for="checkIpt">Acepto los términos y condiciones</label>
+            <input type="checkbox" name="terminos" id="checkIpt">
+        </div>
+
+        <br>
+        <button type="submit">ENVIAR</button>
+    </form>
+
+</body>
+
+</html>
