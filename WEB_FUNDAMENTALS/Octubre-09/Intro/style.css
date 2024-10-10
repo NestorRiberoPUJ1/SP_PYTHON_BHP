@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    margin-left: 24px;
+}
+
+body {
+    padding: 24px;
+}
+
+
+.card {
+    background-color: lightgray;
+    padding: 16px;
+    border-radius: 16px;
+    background-image: url("./assets/asphalt.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.card>h4 {
+    color: white;
+    text-shadow: 4px 4px 4px black;
+    margin-bottom: 8px;
+
+    display: inline-block;
+}
+
+.card>ul {
+    background-color: transparent;
+    height: 96px;
+    width: 100%;
+    overflow: auto;
+}
+
+.card>ul>li {
+    color: white;
+    text-shadow: 4px 4px 4px white;
+}
+
