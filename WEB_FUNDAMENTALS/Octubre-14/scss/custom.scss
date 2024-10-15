@@ -1,0 +1,28 @@
+/* Modificar Paleta de colores */
+$primary: #cd212a;
+$secondary: #fff200;
+$success: #008c45;
+$info: #00a1e4;
+$warning: #ff8000;
+$danger: #CEDC00;
+$light: #f8f9fa;
+$dark: #343a40;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark
+);
+
+/* MODIFICAR ESTILOS DE LOS BOTONES */
+
+$btn-border-radius: 80px;
+$btn-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+
+/* Importanto todo bootstrap */
+@import "../bootstrap/scss/bootstrap.scss";
