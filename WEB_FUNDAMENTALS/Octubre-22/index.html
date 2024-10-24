@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <header>
+        <h1>
+            <span>Flor</span>Mania
+        </h1>
+        <div>
+            <h3 onmouseover="handleHover(this)">Envía Flores</h3>
+            <h3>Nosotros</h3>
+            <button onclick="alert('Bienvenido a la tienda de las flores')">Iniciar Sesión</button>
+        </div>
+    </header>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav>
+        <a href="#">Girasoles</a>
+        <a href="#">Rosas</a>
+        <a href="#">Claveles</a>
+        <a href="#">Tulipanes</a>
+        <a href="#">Lirios</a>
+        <a href="#">Orquideas</a>
+    </nav>
+    <main>
+        <h2>Flor del Mes</h2>
+        <img src="./assets/flor-del-mes.jpg" alt="mainImg">
+        <div>
+            <p>Mostrando <strong>50 Resultados</strong></p>
+            <a href="#">Ver más Flores</a>
+        </div>
+        <div>
+            <div class="card">
+                <img src="./assets/ramo-de-rosas.jpg" alt="flower">
+                <div>
+                    <div>
+                        <a href="">Ramo de Rosas</a>
+                        <p>$40.00</p>
+                    </div>
+                    <button class="btn" onclick="handleClickBtn(this)">Comprar</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./assets/ramo-de-rosas.jpg" alt="flower">
+                <div>
+                    <div>
+                        <a href="">Ramo de Rosas</a>
+                        <p>$40.00</p>
+                    </div>
+                    <button class="btn" onclick="handleClickBtn(this)">Comprar</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./assets/ramo-de-rosas.jpg" alt="flower">
+                <div>
+                    <div>
+                        <a href="">Ramo de Rosas</a>
+                        <p>$40.00</p>
+                    </div>
+                    <button class="btn" onclick="handleClickBtn(this)">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+
+</html>
