@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/style.css') }}">
+</head>
+
+<body>
+    <h1>Hola desde Flask</h1>
+    <h2>Profesor : {{profesor}}</h2>
+    <h3>Estudiantes:</h3>
+    <ol>
+        {% for estudiante in estudiantes %}
+        <li>
+            {{estudiante['nombre']}} - {{estudiante['edad']}}
+            {% if estudiante['edad'] >= 30: %}
+            (Adulto)
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+    <p>
+        Flask es un microframework para el desarrollo de aplicaciones web en Python. Es ligero y fácil de usar, lo que
+        lo
+        hace ideal para proyectos pequeños y medianos. Aquí hay algunos puntos clave sobre Flask:
+    </p>
+    <ul>
+        <li>
+            <strong> Microframework :</strong> Flask es considerado un microframework porque no incluye muchas
+            herramientas y
+            bibliotecas
+            por
+            defecto. Esto permite a los desarrolladores elegir las extensiones y bibliotecas que necesitan, manteniendo
+            el
+            núcleo del framework ligero.
+        </li>
+        <li>
+            <strong> Flexibilidad:</strong> Flask proporciona una gran flexibilidad y control sobre cómo se estructuran
+            las aplicaciones.
+            No
+            impone una estructura específica, lo que permite a los desarrolladores organizar su código como prefieran.
+        </li>
+        <li>
+            <strong> Simplicidad: </strong>Flask es fácil de aprender y usar, lo que lo hace adecuado para
+            principiantes. Su sintaxis es
+            clara
+            y
+            concisa, y la documentación es extensa y bien escrita.
+        </li>
+        <li>
+            <strong>Extensible:</strong> Aunque es ligero, Flask es altamente extensible. Hay muchas
+            extensiones disponibles que añaden
+            funcionalidades como autenticación, manejo de formularios, y conexión a bases de datos.
+        </li>
+        <li>
+            <strong>Jinja2:</strong> Flask utiliza Jinja2 como su motor de plantillas, lo que permite a los
+            desarrolladores generar HTML
+            dinámico
+            de manera eficiente.
+        </li>
+    </ul>
+</body>
+
+</html>
