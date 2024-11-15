@@ -3,10 +3,7 @@
 from dataclasses import dataclass
 from datetime import date
 
-if __name__ == '__main__':
-    from ..config.mysqlconnection import connectToMySQL
-else:
-    from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.config.mysqlconnection import connectToMySQL
 
 @dataclass
 class Users:
