@@ -55,8 +55,8 @@ class default_model:
         except:
             return None
 
-    @classmethod
     # Método para guardar un registro en la tabla
+    @classmethod
     def save(cls, data):
         # Crea los campos de la tabla como string separados por comas
         string_fields = ', '.join(cls.data_fields())
