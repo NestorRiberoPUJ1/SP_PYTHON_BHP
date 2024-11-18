@@ -10,6 +10,7 @@
 <body>
     <h1>Bienvenidos Nuevos Usuarios</h1>
     <h3>Esta lista es autogenerada por JINJA</h3>
+    <a href="/users/create">Create User</a>
     <table>
         <thead>
             <tr>
@@ -17,6 +18,7 @@
                 <th>Apellido</th>
                 <th>Correo</th>
                 <th>Referido</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +28,11 @@
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.referral_id or "-" }}</td>
+                <td>
+                    <a href="/users/{{ user.id }}">Ver</a>
+                    <a href="/users/{{ user.id }}/edit">Editar</a>
+                    <a href="/users/{{ user.id }}/delete">Eliminar</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

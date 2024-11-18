@@ -3,7 +3,8 @@
 from dataclasses import dataclass, fields
 from datetime import datetime
 from typing import ClassVar
-from mysqlconnection import connectToMySQL
+""" from mysqlconnection import connectToMySQL """
+from flask_app.config.mysqlconnection import connectToMySQL # Cambiar por la línea anterior si se usa el archivo mysqlconnection.py
 
 # Clase que define el modelo por defecto de las tablas de la base de datos
 
@@ -22,7 +23,19 @@ class default_model:
     def __init__(self, data):
         # Asignar los valores de los atributos a partir de los datos recibidos en el constructor de la clase
         for field in fields(self):
-            setattr(self, field.name, data.get(field.name))
+            # si el campo es de tipo int entonces colocamos None cuando esté vacío
+            if field.type == int and data.get(field.name) == '':
+                setattr(self, field.name, None)
+            else:
+                setattr(self, field.name, data.get(field.name))
+
+
+    def __dict__(self):
+        # Crear un diccionario con los atributos de la clase
+        data = {}
+        for field in fields(self):
+            data[field.name] = getattr(self, field.name)
+        return data
 
     # Métodos CRUD
 
@@ -58,23 +71,25 @@ class default_model:
     # Método para guardar un registro en la tabla
     @classmethod
     def save(cls, data):
-        # Crea los campos de la tabla como string separados por comas
-        string_fields = ', '.join(cls.data_fields())
-        # Crea los valores de los campos como string separados por comas y con el formato %s
-        string_values = ', '.join([f'%({field})s' for field in cls.data_fields()])
         # Crea el query
-        query = f'INSERT INTO {cls.table_name} ({string_fields}) VALUES ({string_values})'
+        query = f'INSERT INTO {cls.table_name} ({cls.string_fields()}) VALUES ({cls.string_values()})'
         # Retorna el id del nuevo registro
         return connectToMySQL('red_social').query_db(query, data)
         
-
     # Método para actualizar un registro de la tabla
-    def update(self):
-        pass
+    @classmethod
+    def update(cls,data):
+        # Crea el query
+        query = f'UPDATE {cls.table_name} SET {cls.string_update()} WHERE id = %(id)s'
+        # Retorna el id del registro editado
+        return connectToMySQL('red_social').query_db(query, data)
 
     # Método para eliminar un registro de la tabla
-    def delete_by_id(self, id):
-        pass
+    @classmethod
+    def delete_by_id(cls, id):
+        # Crea el query
+        query = f'DELETE FROM {cls.table_name} WHERE id = {id}'
+        return connectToMySQL('red_social').query_db(query)
 
     @classmethod
     # Método para ver todos los campos
@@ -84,6 +99,18 @@ class default_model:
             if (field.name != 'id' and field.name != 'created_at' and field.name != 'updated_at'):
                 class_data_fields.append(field.name)
         return class_data_fields
+    
+    @classmethod
+    def string_fields(cls):
+        return ', '.join(cls.data_fields())
+    
+    @classmethod
+    def string_values(cls):
+        return ', '.join([f'%({field})s' for field in cls.data_fields()])
+    
+    @classmethod
+    def string_update(cls):
+        return ', '.join([f'{field} = %({field})s' for field in cls.data_fields()])
 
 # PRUEBAS
 
