@@ -1,0 +1,8 @@
+mkdir flask_app
+mkdir .\flask_app\config, .\flask_app\models, .\flask_app\controllers, .\flask_app\templates, .\flask_app\static
+mkdir .\flask_app\static\css, .\flask_app\static\js, .\flask_app\static\img
+copy nul > server.py
+copy nul > .env
+copy nul > .\flask_app\config\mysqlconnection.py
+copy nul > .\flask_app\__init__.py
+pipenv install flask python-dotenv pymysql
