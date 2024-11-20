@@ -29,7 +29,6 @@ class default_model:
             else:
                 setattr(self, field.name, data.get(field.name))
 
-
     def __dict__(self):
         # Crear un diccionario con los atributos de la clase
         data = {}

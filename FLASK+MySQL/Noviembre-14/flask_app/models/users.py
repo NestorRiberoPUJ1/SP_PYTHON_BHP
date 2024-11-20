@@ -1,9 +1,10 @@
 
 
-from dataclasses import InitVar, dataclass, field
+from dataclasses import InitVar, dataclass
 from typing import ClassVar
 from flask_app.models.default_model import default_model
-
+from flask_app.models import posts
+from flask_app.models import reactions
 
 @dataclass(init=False)
 class Users(default_model):
@@ -23,6 +24,18 @@ class Users(default_model):
     referred_users: InitVar[list["Users"]]
     # Quién es el usuario que refirió a este usuario
     referrer: InitVar["Users"]
+    # Posts que ha creado el usuario
+    posts: InitVar[list["posts.posts"]]
+    # Reacciones que ha hecho el usuario
+    reactions: InitVar[list["reactions.reactions"]]
+
+
+
+
+
+
+
+
 
     # METODOS DE RELACIONES
     # Método para obtener los usuarios referidos por un usuario

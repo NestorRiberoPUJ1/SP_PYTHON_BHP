@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Todos los POSTS</h1>
+    <h3>Esta lista es autogenerada por JINJA</h3>
+    <a href="/posts/create">Create a Post</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Contenido</th>
+                <th>Creador</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.content }}</td>
+                <td>{{ post.owner_id or "-" }}</td>
+                <td>
+                    <a href="/posts/{{ post.id }}">Ver</a>
+                    <a href="/posts/{{ post.id }}/edit">Editar</a>
+                    <a href="/posts/{{ post.id }}/delete">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+</body>
+
+</html>

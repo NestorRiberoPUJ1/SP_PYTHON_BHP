@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>DETALLES DEL POST</h1>
+
+    <p>Contenido: {{ post.content }}</p>
+
+    <h3>
+        Reaccionar
+    </h3>
+    <div>
+        <form action="/posts/{{ post.id }}/reactions" method="POST">
+            <input type="hidden" name="type" value="LIKE">
+            <select name="users_id" id="users_id">
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="LIKE">
+        </form>
+        <form action="/posts/{{ post.id }}/reactions" method="POST">
+            <input type="hidden" name="type" value="DISLIKE">
+            <select name="users_id" id="users_id">
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="DISLIKE">
+        </form>
+        <form action="/posts/{{ post.id }}/reactions" method="POST">
+            <input type="hidden" name="type" value="FUNNY">
+            <select name="users_id" id="users_id">
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="FUNNY">
+        </form>
+    </div>
+
+    <h3>Reacciones</h3>
+    <ul>
+        {% for reaction in post.reactions %}
+        <li>{{ reaction.type }} - {{ reaction.user.firstname}} {{ reaction.user.lastname}}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/posts">Volver</a>
+</body>
+
+</html>
