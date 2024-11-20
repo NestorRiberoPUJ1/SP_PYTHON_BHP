@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>DETALLES DE ESPECIE: {{specie.name}}</h1>
+
+    <h3>Mis Razas:</h3>
+    <ul>
+        {% for breed in specie.breed_list %}
+        <li><a href="/breeds/{{breed.id}}">{{breed.name}}</a></li>
+        {% endfor %}
+    </ul>
+
+
+    <a href="/users">Volver</a>
+</body>
+
+</html>

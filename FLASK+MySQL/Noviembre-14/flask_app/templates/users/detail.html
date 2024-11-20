@@ -14,7 +14,21 @@
     <h3>Apellido: {{usuario.lastname}}</h3>
     <h3>Correo: {{usuario.email}}</h3>
     <h3>Dirección: {{usuario.address}}</h3>
-    <h3>Referido: {{usuario.referral_id}}</h3>
+    <h3>Referido Por: 
+        {% if usuario.referrer %}
+        <a href="/users/{{usuario.referrer.id}}">{{usuario.referrer.firstname or '-'}} {{usuario.referrer.lastname or '-'}}</a>
+        {% else %}
+        N/A
+        {% endif %}
+    </h3>
+
+    <h3>Mis Referidos:</h3>
+    <ul>
+        {% for referido in usuario.referred_users %}
+        <li><a href="/users/{{referido.id}}">{{referido.firstname}} {{referido.lastname}}</a></li>
+        {% endfor %}
+    </ul>
+
 
     <a href="/users">Volver</a>
 </body>

@@ -112,6 +112,10 @@ class default_model:
     def string_update(cls):
         return ', '.join([f'{field} = %({field})s' for field in cls.data_fields()])
 
+    @staticmethod
+    def run_query(query, data):
+        return connectToMySQL('red_social').query_db(query, data)
+
 # PRUEBAS
 
 

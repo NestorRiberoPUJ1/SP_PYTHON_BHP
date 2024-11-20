@@ -1,9 +1,10 @@
 
 
-from dataclasses import dataclass, fields
+from dataclasses import InitVar, dataclass, field, fields
 from datetime import datetime
 from typing import ClassVar
-from default_model import default_model
+from flask_app.models.default_model import default_model
+from flask_app.models import breeds
 
 
 @dataclass(init=False)
@@ -13,6 +14,10 @@ class species(default_model):
 
     # Atributos de la clase
     name: str
+
+    # RELACIONES
+    # razas: breeds.breeds
+    breed_list: InitVar[list["breeds.breeds"]]
 
 
 # Pruebas de la clase
@@ -26,7 +31,7 @@ if __name__ == '__main__':
 
     print(species.data_fields())
 
-    data={
+    data = {
         'name': 'Crustaceo'
     }
     species.save(data)

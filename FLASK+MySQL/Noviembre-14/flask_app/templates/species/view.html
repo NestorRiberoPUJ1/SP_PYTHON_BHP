@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>LISTA DE ESPECIES</h1>
+    <h3>Esta lista es autogenerada por JINJA</h3>
+    <a href="/species/create">Create Specie</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for specie in species %}
+            <tr>
+                <td>{{ specie.name }}</td>
+                <td>
+                    <a href="/species/{{ specie.id }}">Ver</a>
+                    <a href="/species/{{ specie.id }}/edit">Editar</a>
+                    <a href="/species/{{ specie.id }}/delete">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+</body>
+
+</html>
