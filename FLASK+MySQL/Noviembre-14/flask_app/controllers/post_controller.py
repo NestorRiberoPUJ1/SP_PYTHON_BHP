@@ -1,81 +1,73 @@
-from flask_app import app
+from dataclasses import dataclass
 from flask import redirect, render_template, request
-from flask_app.models.posts import posts
-from flask_app.models.users import Users
-from flask_app.models.reactions import reactions
+from flask_app.controllers import default_controller as DC
+from flask_app import app
+from flask_app.models import posts
+from flask_app.models import users
+from flask_app.models import reactions
+
+# POLIMORFISMO CON DATA CLASSES
 
 
-# RUTA PARA VER TODOS LOS POSTS
-@app.route('/posts')
-def view_post():
-    post_list = posts.all()
-    return render_template('posts/view.html', posts=post_list)
+@dataclass(init=False)
+class PostCreate(DC.ModelCreate):
 
-# RUTA DEL FORMULARIO DE CREACIÓN DE POSTS
-
-
-@app.route('/posts/create', methods=['GET'])
-def create_post():
-    user_list = Users.all()
-    return render_template('posts/create.html', users=user_list)
-
-# RUTA PARA CREAR UN POST QUE RECIBE LOS DATOS DEL FORMULARIO
+    def get(self):
+        user_list = users.Users.all()
+        return render_template(f"{self.template_folder}/create.html", users=user_list)
 
 
-@app.route('/posts/create', methods=['POST'])
-def create_post_post():
-    # request.form es un diccionario que contiene los datos del formulario
-    new_post = posts(request.form)
-    posts.save(new_post.__dict__())
-    return redirect('/posts')
+@dataclass(init=False)
+class PostDetail(DC.ModelDetail):
 
-# RUTA PARA VER LOS DETALLES DE UN POST
-
-
-@app.route('/posts/<int:id>')
-def detail_post(id):
-    # Buscamos al post por su id
-    post = posts.find_by_id(id)
-    post = post.get_reactions()
-    print(post.reactions)
-    user_list = Users.all()
-    return render_template('posts/detail.html', post=post, users=user_list)
-
-# RUTA PARA EDITAR UN POST
+    def get(self, id):
+        item = self.model.find_by_id(id)
+        item = item.get_reactions()
+        user_list = users.Users.all()
+        return render_template(f"{self.template_folder}/detail.html", item=item, users=user_list)
 
 
-@app.route('/posts/<int:id>/edit')
-def edit_post(id):
-    # Buscamos al post por su id
-    post = posts.find_by_id(id)
-    user_list = Users.all()
-    return render_template('posts/edit.html', post=post, users=user_list)
+@dataclass(init=False)
+class PostEdit(DC.ModelEdit):
 
-# RUTA PARA ACTUALIZAR LOS DATOS DE UN POST
-
-
-@app.route('/posts/<int:id>/edit', methods=['POST'])
-def edit_post_post(id):
-    # Creamos un objeto de la clase posts con los datos del formulario
-    updated_post = posts(request.form)
-    # Asignamos el id al objeto
-    updated_post.id = id
-    # Actualizamos los datos del post
-    posts.update(updated_post.__dict__())
-    return redirect('/posts')
-
-# RUTA PARA ELIMINAR UN POST
+    def get(self, id):
+        item = self.model.find_by_id(id)
+        user_list = users.Users.all()
+        return render_template(f"{self.template_folder}/edit.html", item=item, users=user_list)
 
 
-@app.route('/posts/<int:id>/delete')
-def delete_post(id):
-    posts.delete_by_id(id)
-    return redirect('/posts')
-
-
+# RUTA PARA CREAR UNA REACCION
 @app.route('/posts/<int:id>/reactions', methods=['POST'])
 def create_reaction(id):
     reaction = reactions(request.form)
     reaction.posts_id = id
     reactions.save(reaction.__dict__())
     return redirect(f'/posts/{id}')
+
+
+# RUTAS PARA ESPECIES
+
+# RUTA PARA VER TODOS LOS POSTS
+app.add_url_rule('/posts', view_func=DC.ModelList.as_view('posts',
+                 model=posts.posts, template_folder='posts'))
+
+# RUTA PARA CREAR UN POST
+app.add_url_rule('/posts/create', view_func=PostCreate.as_view('posts_create',
+                 model=posts.posts, template_folder='posts', on_create_redirect='posts'))
+
+# RUTA PARA VER LOS DETALLES DE UN POST
+app.add_url_rule('/posts/<int:id>', view_func=PostDetail.as_view(
+    'posts_detail', model=posts.posts, template_folder='posts'))
+
+# RUTA PARA EDITAR UN POST
+app.add_url_rule('/posts/<int:id>/edit', view_func=DC.ModelEdit.as_view('posts_edit',
+                 model=posts.posts, template_folder='posts', on_update_redirect='posts'))
+
+# RUTA PARA ELIMINAR UN POST
+app.add_url_rule('/posts/<int:id>/delete', view_func=DC.ModelDelete.as_view(
+    'posts_delete', model=posts.posts, on_delete_redirect='posts'))
+
+
+
+
+

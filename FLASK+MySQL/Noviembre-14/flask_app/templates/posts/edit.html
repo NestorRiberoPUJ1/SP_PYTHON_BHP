@@ -10,17 +10,17 @@
 <body>
 
     <h1>Formulario de Registro</h1>
-    <form action="/posts/{{post.id}}/edit" method="post">
+    <form action="/posts/{{item.id}}/edit" method="post">
         <div>
             <label for="content">Contenido</label>
             <br>
-            <textarea name="content" id="content">{{post.content}}</textarea>
+            <textarea name="content" id="content">{{item.content}}</textarea>
         </div>
         <div>
             <label for="owner_id">Creador</label>
             <select name="owner_id" id="owner_id">
                 {% for user in users %}
-                {% if user.id == post.owner_id %}
+                {% if user.id == item.owner_id %}
                 <option value="{{ user.id }}" selected>{{ user.firstname }} {{ user.lastname }}</option>
                 {% else %}
                 <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>

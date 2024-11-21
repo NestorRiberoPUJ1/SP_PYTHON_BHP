@@ -8,17 +8,17 @@
 </head>
 
 <body>
-    <h1>DETALLES DE ESPECIE: {{specie.name}}</h1>
+    <h1>DETALLES DE ESPECIE: {{item.name}}</h1>
 
     <h3>Mis Razas:</h3>
     <ul>
-        {% for breed in specie.breed_list %}
+        {% for breed in item.breed_list %}
         <li><a href="/breeds/{{breed.id}}">{{breed.name}}</a></li>
         {% endfor %}
     </ul>
 
 
-    <a href="/users">Volver</a>
+    <a href="/species">Volver</a>
 </body>
 
 </html>

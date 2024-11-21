@@ -20,6 +20,16 @@ class species(default_model):
     breed_list: InitVar[list["breeds.breeds"]]
 
 
+    def get_breeds(self):
+        query = f'SELECT * FROM {breeds.breeds.table_name} WHERE specie_id = %(id)s;'
+        data= self.__dict__()
+        results = self.run_query(query, data)
+        self.breed_list = []
+        for result in results:
+            self.breed_list.append(breeds.breeds(result))
+        return self
+
+
 # Pruebas de la clase
 if __name__ == '__main__':
 

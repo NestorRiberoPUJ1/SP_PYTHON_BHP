@@ -1,66 +1,34 @@
+from dataclasses import dataclass
+from typing import ClassVar
+
+from flask import render_template
+from flask_app.controllers import default_controller as DC
+from flask_app.models import species
 from flask_app import app
-from flask import redirect, render_template, request
-from flask_app.models.species import species
+
+#POLIMORFISMO CON DATA CLASSES
+
+@dataclass(init=False)
+class SpecieDetail(DC.ModelDetail):
+
+    def get(self, id):
+        item = self.model.find_by_id(id)
+        item = item.get_breeds()
+        return render_template(f"{self.template_folder}/detail.html", item=item)
 
 
-# RUTA PARA VER TODOS LOS ESPECIES
-@app.route('/species')
-def view_specie():
-    specie_list = species.all()
-    return render_template('species/view.html', species=specie_list)
 
-# RUTA DEL FORMULARIO DE CREACIÓN DE ESPECIES
+# RUTAS PARA ESPECIES
 
-
-@app.route('/species/create', methods=['GET'])
-def create_specie():
-    return render_template('species/create.html')
-
-# RUTA PARA CREAR UN ESPECIE QUE RECIBE LOS DATOS DEL FORMULARIO
-
-
-@app.route('/species/create', methods=['POST'])
-def create_post_specie():
-    # request.form es un diccionario que contiene los datos del formulario
-    new_specie = species(request.form)
-    species.save(new_specie.__dict__())
-    return redirect('/species')
-
-# RUTA PARA VER LOS DETALLES DE UN ESPECIE
+# RUTA PARA VER TODAS LAS ESPECIES
+app.add_url_rule('/species', view_func=DC.ModelList.as_view('species', model=species.species, template_folder='species'))
+# RUTA PARA VER LOS DETALLES DE UNA ESPECIE
+app.add_url_rule('/species/<int:id>', view_func=SpecieDetail.as_view('species_detail', model=species.species, template_folder='species'))
+# RUTA PARA CREAR UNA ESPECIE
+app.add_url_rule('/species/create', view_func=DC.ModelCreate.as_view('species_create', model=species.species, template_folder='species', on_create_redirect='species'))
+# RUTA PARA EDITAR UNA ESPECIE
+app.add_url_rule('/species/<int:id>/edit', view_func=DC.ModelEdit.as_view('species_edit', model=species.species, template_folder='species', on_update_redirect='species'))
+# RUTA PARA ELIMINAR UNA ESPECIE
+app.add_url_rule('/species/<int:id>/delete', view_func=DC.ModelDelete.as_view('species_delete', model=species.species, on_delete_redirect='species'))
 
 
-@app.route('/species/<int:id>')
-def detail_specie(id):
-    # Buscamos al usuario por su id
-    specie = species.find_by_id(id)
-    specie
-    return render_template('species/detail.html', specie=specie)
-
-# RUTA PARA EDITAR UN ESPECIE
-
-@app.route('/species/<int:id>/edit')
-def edit_specie(id):
-    # Buscamos al usuario por su id
-    specie = species.find_by_id(id)
-    return render_template('species/edit.html', specie=specie)
-
-# RUTA PARA ACTUALIZAR LOS DATOS DE UN ESPECIE
-
-
-@app.route('/species/<int:id>/edit', methods=['POST'])
-def edit_post_specie(id):
-    # Creamos un objeto de la clase species con los datos del formulario
-    updated_specie = species(request.form)
-    # Asignamos el id al objeto
-    updated_specie.id = id
-    # Actualizamos los datos del usuario
-    species.update(updated_specie.__dict__())
-    return redirect('/species')
-
-# RUTA PARA ELIMINAR UN ESPECIE
-
-
-@app.route('/species/<int:id>/delete')
-def delete_specie(id):
-    species.delete_by_id(id)
-    return redirect('/species')

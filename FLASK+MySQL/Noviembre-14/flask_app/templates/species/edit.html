@@ -9,11 +9,11 @@
 
 <body>
 
-    <h1>Formulario de Registro</h1>
-    <form action="/species/{{specie.id}}/edit" method="post">
+    <h1>Formulario de Especies</h1>
+    <form action="/species/{{item.id}}/edit" method="post">
         <div>
             <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" value="{{specie.name}}">
+            <input type="text" name="name" id="name" value="{{item.name}}">
         </div>
 
         <button type="submit">Actualizar</button>
