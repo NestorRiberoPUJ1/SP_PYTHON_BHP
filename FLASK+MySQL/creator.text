@@ -1,8 +1,8 @@
 mkdir flask_app
 mkdir .\flask_app\config, .\flask_app\models, .\flask_app\controllers, .\flask_app\templates, .\flask_app\static
 mkdir .\flask_app\static\css, .\flask_app\static\js, .\flask_app\static\img
-copy nul > server.py
-copy nul > .env
-copy nul > .\flask_app\config\mysqlconnection.py
-copy nul > .\flask_app\__init__.py
-pipenv install flask python-dotenv pymysql
+(echo "from flask_app import app" "from flask_app.controllers import *" " " "# Server execution" "if __name__=='__main__':" "	app.run(debug=True)") > server.py
+(echo APP_SECRET_KEY='"my-key"' DB_NAME='"my_bd"' DB_HOSTNAME='"localhost"' DB_USERNAME='"root"' DB_PASSWORD='"root"') > .env
+(echo "# Aqui va el snippet de mysqlconnection") > .\flask_app\config\mysqlconnection.py
+(echo "from flask import Flask, render_template, request, redirect, session" "from dotenv import load_dotenv" "import os" "# App Initialization" "load_dotenv()" "app = Flask(__name__)" "app.secret_key = os.getenv('APP_SECRET_KEY')") > ./flask_app/__init__.py
+pipenv install flask python-dotenv pymysql flask-bcrypt
