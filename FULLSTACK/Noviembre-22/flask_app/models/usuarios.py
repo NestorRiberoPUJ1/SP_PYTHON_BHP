@@ -6,8 +6,10 @@ from typing import ClassVar
 
 from flask import flash
 from flask_app.models.default_model import default_model
+from flask_bcrypt import Bcrypt
+from flask_app import app
 
-
+bcrypt = Bcrypt(app)
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 @dataclass(init=False)
@@ -45,3 +47,20 @@ class Usuarios(default_model):
             is_valid = False        
         return is_valid
 
+
+    @classmethod
+    def save(cls,data):
+        # Reemplazar la contraseña por su hash
+        data['contraseña'] = bcrypt.generate_password_hash(data['contraseña'])
+        return super().save(data)
+    
+    @classmethod
+    def find_by_email(cls,email):
+        query = f'SELECT * FROM {cls.table_name} WHERE email = %(email)s'
+        data = {
+            'email': email
+        }
+        result = cls.run_query(query,data)
+        if len(result) < 1:
+            return False
+        return cls(result[0])

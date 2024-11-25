@@ -36,8 +36,8 @@ class ModelCreate(MethodView):
     #METODO POST PARA GUARDAR LOS DATOS DEL FORMULARIO
     def post(self):
         new_item = self.model(request.form)
-        self.model.save(new_item.__dict__())
-        return redirect(f"/{self.on_create_redirect}")
+        self.new_item=self.model.save(new_item.__dict__())
+        return redirect(f"{self.on_create_redirect}")
     
 #CLASE PARA EDITAR UN MODELO
 @dataclass
