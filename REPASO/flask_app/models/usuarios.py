@@ -62,7 +62,7 @@ class Usuario(default_model):
         if len(result) > 0:
             # Verificar si la contraseña es correcta contraseña hash vs contraseña ingresada
             if bcrypt.check_password_hash(result[0]['contraseña'], data['contraseña']):
-                return True
+                return result[0].get('id')
             
         flash("Email o contraseña incorrectos", "login")
         return False

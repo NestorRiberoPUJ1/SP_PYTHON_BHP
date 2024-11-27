@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"
+        defer></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+
+            <h1>Bienvenido {{usuario.nombre}}</h1>
+
+            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="">Nueva Publicacion</h1>
+
+        <form action="/publicaciones/create" method="post" class="row align-items-start">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="nombreIpt" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombreIpt" name="nombre">
+                    {% with errors = get_flashed_messages(category_filter=["nombre"]) %}
+                    {% for error in errors %}
+                    <div class="alert alert-danger"> {{error}} </div>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+                <div class="mb-3">
+                    <label for="fechaIpt" class="form-label">Fecha</label>
+                    <input type="date" class="form-control" id="fechaIpt" name="fecha">
+                    {% with errors = get_flashed_messages(category_filter=["fecha"]) %}
+                    {% for error in errors %}
+                    <div class="alert alert-danger"> {{error}} </div>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+                <div class="mb-3">
+                    <label for="lugarIpt" class="form-label">Lugar</label>
+                    <input type="text" class="form-control" id="lugarIpt" name="lugar">
+                    {% with errors = get_flashed_messages(category_filter=["lugar"]) %}
+                    {% for error in errors %}
+                    <div class="alert alert-danger"> {{error}} </div>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+
+
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="descripcionIpt" class="form-label">Descripción</label>
+                    <br>
+                    <textarea class="w-100" rows="5" id="descripcionIpt" name="descripcion"></textarea>
+                    <br>
+                    {% with errors = get_flashed_messages(category_filter=["descripcion"]) %}
+                    {% for error in errors %}
+                    <div class="alert alert-danger"> {{error}} </div>
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+                <button type="submit" class="btn btn-primary">Compartir</button>
+            </div>
+        </form>
+        <h1 class="">Todas las observaciones de Estrellas</h1>
+        {% for publicacion in publicaciones %}
+        <div class="card w-100">
+            <div class="card-body">
+                <h5 class="card-title">{{publicacion.nombre}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{publicacion.owner_id}} {{publicacion.fecha}}
+                    {{publicacion.lugar}}</h6>
+                <p class="card-text">{{publicacion.descripcion}}</p>
+                <form action="/like" method="post" class="d-flex flex-row justify-content-start align-items-center ">
+                    <h6 class="me-2">Me gusta: valor</h6>
+                    <input type="hidden" name="publicacion_id" value="{{publicacion.id}}">
+                    <a href="#" class="btn btn-primary">Like</a>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
