@@ -1,11 +1,12 @@
 
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass
 from datetime import date
 from typing import ClassVar
 
 from flask import flash
 from flask_app.models.default_model import default_model
 from flask_app.utils.validadores import error_message, esta_vacio
+from flask_app.models import usuarios
 
 
 @dataclass(init=False)
@@ -20,6 +21,17 @@ class Publicacion(default_model):
     descripcion: str
 
     owner_id: int
+
+    # Campos virtuales para las relaciones
+    autor: InitVar["usuarios.Usuario"]
+
+    likes: InitVar[dict]
+
+    def __init__(self, data):
+        super().__init__(data)
+        if (data.get('owner_id')):
+            self.get_autor()
+        self.get_likes()
 
     @staticmethod
     def validate(data):
@@ -58,4 +70,28 @@ class Publicacion(default_model):
             True, "El owner_id no puede estar vacío", "owner_id")(esta_vacio)(data.get('owner_id'))
 
         return error_nombre and error_fecha and error_lugar and error_descripcion and error_owner_id
-        
+
+    def get_autor(self):
+        # Buscar el autor de la publicación por el owner_id en el modelo de usuarios
+        autor = usuarios.Usuario.find_by_id(self.owner_id)
+        self.autor = autor
+        return self
+
+    def get_likes(self):
+        # Query
+        query = f"SELECT * FROM likes WHERE publicacion_id = %(id)s"
+        # Ejecutar query
+        likes = self.run_query(query, self.__dict__())
+        print(likes)
+        likes_list = []
+        for like in likes:
+            likes_list.append(like['usuario_id'])
+        self.likes = {
+            'count': len(likes_list),
+            'list': likes_list
+        }    
+
+    @staticmethod
+    def like(data):
+        query = f"INSERT INTO likes (usuario_id, publicacion_id) VALUES (%(usuario_id)s, %(publicacion_id)s)"
+        return Publicacion.run_query(query, data)

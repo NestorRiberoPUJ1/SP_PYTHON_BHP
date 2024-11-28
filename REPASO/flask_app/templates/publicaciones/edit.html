@@ -13,22 +13,14 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-
-            <h1>Bienvenido {{usuario.nombre}}</h1>
-
-            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
-        </div>
-    </nav>
     <div class="container">
-        <h1 class="">Nueva Publicacion</h1>
+        <h1 class="">Editar Publicacion</h1>
 
-        <form action="/publicaciones/create" method="post" class="row align-items-start">
+        <form action="/publicaciones/{{publicacion.id}}/edit" method="post" class="row align-items-start">
             <div class="col">
                 <div class="mb-3">
                     <label for="nombreIpt" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombreIpt" name="nombre">
+                    <input type="text" class="form-control" id="nombreIpt" name="nombre" value="{{publicacion.nombre}}">
                     {% with errors = get_flashed_messages(category_filter=["nombre"]) %}
                     {% for error in errors %}
                     <div class="alert alert-danger"> {{error}} </div>
@@ -37,7 +29,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="fechaIpt" class="form-label">Fecha</label>
-                    <input type="date" class="form-control" id="fechaIpt" name="fecha">
+                    <input type="date" class="form-control" id="fechaIpt" name="fecha" value="{{publicacion.fecha}}">
                     {% with errors = get_flashed_messages(category_filter=["fecha"]) %}
                     {% for error in errors %}
                     <div class="alert alert-danger"> {{error}} </div>
@@ -46,7 +38,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="lugarIpt" class="form-label">Lugar</label>
-                    <input type="text" class="form-control" id="lugarIpt" name="lugar">
+                    <input type="text" class="form-control" id="lugarIpt" name="lugar" value="{{publicacion.lugar}}">
                     {% with errors = get_flashed_messages(category_filter=["lugar"]) %}
                     {% for error in errors %}
                     <div class="alert alert-danger"> {{error}} </div>
@@ -60,7 +52,8 @@
                 <div class="mb-3">
                     <label for="descripcionIpt" class="form-label">Descripción</label>
                     <br>
-                    <textarea class="w-100" rows="5" id="descripcionIpt" name="descripcion"></textarea>
+                    <textarea class="w-100" rows="5" id="descripcionIpt"
+                        name="descripcion">{{publicacion.descripcion}}</textarea>
                     <br>
                     {% with errors = get_flashed_messages(category_filter=["descripcion"]) %}
                     {% for error in errors %}
@@ -68,36 +61,9 @@
                     {% endfor %}
                     {% endwith %}
                 </div>
-                <button type="submit" class="btn btn-primary">Compartir</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </form>
-        <h1 class="">Todas las observaciones de Estrellas</h1>
-        {% for publicacion in publicaciones %}
-        <div class="card w-100 my-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h5 class="card-title">{{publicacion.nombre}}</h5>
-                    {% if publicacion.owner_id == session['user_id'] %}
-                    <div class="d-flex align-items-center justify-content-between" >
-                        <a href="/publicaciones/{{publicacion.id}}/edit" class="btn btn-warning me-2">Editar</a>
-                        <a href="/publicaciones/{{publicacion.id}}/delete" class="btn btn-danger me-2">Borrar</a>
-                    </div>
-                    {% endif %}
-                </div>
-                <h6 class="card-subtitle mb-2 text-body-secondary">
-                    {{publicacion.autor.nombre}}: {{publicacion.fecha}} - {{publicacion.lugar}}
-                </h6>
-                <p class="card-text">{{publicacion.descripcion}}</p>
-                <h6 class="me-2">Me gusta: {{publicacion.likes['count']}}</h6>
-                {% if session['user_id'] not in publicacion.likes['list'] %}
-                <form action="/like" method="post" class="d-flex flex-row justify-content-start align-items-center ">
-                    <input type="hidden" name="publicacion_id" value="{{publicacion.id}}">
-                    <button class="btn btn-primary" type="submit">Like</button>
-                </form>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
     </div>
 </body>
 

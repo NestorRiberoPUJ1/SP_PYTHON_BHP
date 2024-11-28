@@ -4,6 +4,8 @@ from flask_app.models import usuarios
 from flask_app.models import publicaciones
 from flask_app import bcrypt
 
+from flask_app.utils.auth import session_required
+
 
 @app.route('/')
 def index():
@@ -33,8 +35,16 @@ def login():
     return redirect('/dashboard')
 
 
+@app.route('/logout')
+@session_required("/")
+def logout():
+    session.clear()
+    return redirect('/')
+
 @app.route('/dashboard')
+@session_required("/")
 def dashboard():
     user = usuarios.Usuario.find_by_id(session['user_id'])
     publicaciones_list = publicaciones.Publicacion.all()
+    print(publicaciones_list)
     return render_template('root/dashboard.html', usuario=user, publicaciones=publicaciones_list)
